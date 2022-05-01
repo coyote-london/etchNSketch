@@ -1,0 +1,44 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-image: url('DirtTexture-kristina-delp-unsplash.jpg');
+    background-color: rgb(61, 45, 29);
+}
+
+#texture {
+    background-color: rgb(61, 45, 29);
+    width: 100vw;
+    height: 100vh;
+    opacity: .98;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#board {
+    display: grid;
+    background-color: rgb(92, 57, 22);
+    opacity: .75;
+    width: 75vmin;
+    height: 75vmin;
+    margin-top: 25px;
+    grid-template-rows: repeat(16, 1fr);
+    grid-template-columns: repeat(16, 1fr);
+    border: 4vmin solid rgb(59, 41, 25);
+    border-radius: 15px;
+}
+
+.worm {
+    background-color: rgb(151, 107, 79);
+    border: .25vmin solid rgb(163, 109, 75);
+    border-radius: 1px;
+    opacity: 1;
+}
+
+.food {
+    background-color: rgb(194, 173, 102);
+    border: .4vmin solid rgb(151, 130, 67);
+    border-radius: 4px;
+}
