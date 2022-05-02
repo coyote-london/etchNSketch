@@ -59,6 +59,7 @@ function drawWorm() {
 }
 
 
+//Input Snake Movment
 
 function refreshSnake() {
     for(i= wormBody.length -2; i >= 0; i--) {
@@ -68,10 +69,20 @@ function refreshSnake() {
     wormBody[0].y += inputDirection.y;
 }
 
+//Increase Size after eating food
+
 function expand(amount) {
     newSegments += amount;
 }
 
+function addSegments() {
+    for (i=0; i < newSegments; i++) {
+        wormBody.push({...wormBody[wormBody.length -1]});
+        newSegments = 0;
+    }
+}
+
+//Sense collisions with wall, food, or worm itself
 function onWorm(position, {ignoreHead=false} = {}) {
     return wormBody.some((segment, index) => {
         if (ignoreHead == true && index === 0) return false;
@@ -85,13 +96,6 @@ function equalPositions(pos1, pos2) {
     );
 }
 
-function addSegments() {
-    for (i=0; i < newSegments; i++) {
-        wormBody.push({...wormBody[wormBody.length -1]});
-        newSegments = 0;
-    }
-}
-
 function getSnakeHead() {
     return wormBody[0];
 }
@@ -100,7 +104,19 @@ function snakeIntersection() {
     return onWorm(wormBody[0], {ignoreHead:true})
 }
 
+function outsideGrid(position) {
+    return (
+        position.x < 1 || position.x > gridSize ||
+        position.y < 1 || position.y > gridSize
+    );   
+}
+
+function checkForDeath() {
+    gameOver = outsideGrid(getSnakeHead()) || snakeIntersection();
+}
+
 //creating snake food
+
 const expansionRate = 3;
 const gridSize = 16;
 let food = getRandomFoodPosition();
@@ -121,14 +137,6 @@ function randomGridPosition() {
     }
 }
 
-function outsideGrid(position) {
-    return (
-        position.x < 1 || position.x > gridSize ||
-        position.y < 1 || position.y > gridSize
-    );
-    
-}
-
 function getRandomFoodPosition() {
     let newFoodPosition;
     while (newFoodPosition == null || onWorm(newFoodPosition)) {
@@ -147,9 +155,7 @@ function drawFood() {
 
 
 
-function checkForDeath() {
-    gameOver = outsideGrid(getSnakeHead()) || snakeIntersection();
-}
+//Gameloop itself
 
 
 function main(currentTime) {
